@@ -1,0 +1,22 @@
+{
+  "extends": "stylelint-config-recommended-scss",
+  "plugins": ["stylelint-declaration-strict-value"],
+  "rules": {
+    "at-rule-disallowed-list": ["import"],
+    "font-family-no-missing-generic-family-keyword": [
+      true,
+      {
+        "ignoreFontFamilies": ["/Satoshi/"]
+      }
+    ],
+    "length-zero-no-unit": true,
+    "media-feature-name-no-unknown": [
+      true,
+      {
+        "ignoreMediaFeatureNames": ["/^min-width-/", "/^max-width-/"]
+      }
+    ],
+    "property-no-unknown": [true, { "ignoreSelectors": [":export"] }],
+    "selector-pseudo-class-no-unknown": [true, { "ignorePseudoClasses": ["export"] }]
+  }
+}
