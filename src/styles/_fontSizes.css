@@ -1,0 +1,10 @@
+:root {
+  --hb-font-size-xxs: 1rem;
+  --hb-font-size-xs: 1.2rem;
+  --hb-font-size-s: 1.4rem;
+  --hb-font-size-m: 1.6rem;
+  --hb-font-size-l: 1.8rem;
+  --hb-font-size-xl: 2rem;
+  --hb-font-size-xxl: 2.8rem;
+  --hb-font-size-xxxl: 4rem;
+}

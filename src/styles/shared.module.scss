@@ -1,0 +1,6 @@
+$sidebar-z-index: 101;
+
+$intercom-z-index: 2147483001;
+
+$modal-z-index: $intercom-z-index + 1;
+$popover-z-index: $intercom-z-index + 2;

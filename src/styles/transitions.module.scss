@@ -1,0 +1,99 @@
+// This file is called a module because:
+// https://github.com/facebook/create-react-app/issues/10047#issuecomment-724227353.
+
+// TODO: Rename to remove `.module` after https://github.com/facebook/create-react-app/pull/10511
+// is released in a create-react-app version.
+// At that point also re-enable scss/at-import-partial-extension stylelint rule
+
+@use "styles/abstracts/mixins" as *;
+
+$transition-duration-ms: 150; // Transition durations should be consistent across the app.
+$transition-duration: $transition-duration-ms * 1ms;
+
+:export {
+  transitionDuration: $transition-duration-ms;
+}
+
+.opacity {
+  &.enter {
+    transition-duration: $transition-duration;
+    transition-property: opacity;
+  }
+
+  &.enterFrom {
+    opacity: 0;
+  }
+
+  &.leave {
+    transition-duration: $transition-duration;
+    transition-property: opacity;
+  }
+
+  &.leaveTo {
+    opacity: 0;
+  }
+}
+
+.slideFromRight {
+  &.enter {
+    transition-duration: $transition-duration;
+    @include max-break-point(mobile-phone) {
+      transition-property: opacity, transform;
+    }
+    @include min-break-point(mobile-phone) {
+      transition-property: right;
+    }
+  }
+
+  &.enterFrom {
+    @include max-break-point(mobile-phone) {
+      opacity: 0;
+      transform: scale(0.75);
+    }
+    @include min-break-point(mobile-phone) {
+      right: -612px;
+    }
+  }
+
+  &.leave {
+    transition-duration: $transition-duration;
+    @include max-break-point(mobile-phone) {
+      transition-property: opacity, transform;
+    }
+    @include min-break-point(mobile-phone) {
+      transition-property: right;
+    }
+  }
+
+  &.leaveTo {
+    @include max-break-point(mobile-phone) {
+      opacity: 0;
+      transform: scale(0.75);
+    }
+    @include min-break-point(mobile-phone) {
+      right: -612px;
+    }
+  }
+}
+
+.zoom {
+  &.enter {
+    transition-duration: $transition-duration;
+    transition-property: opacity, transform;
+  }
+
+  &.enterFrom {
+    opacity: 0;
+    transform: scale(0.75);
+  }
+
+  &.leave {
+    transition-duration: $transition-duration;
+    transition-property: opacity, transform;
+  }
+
+  &.leaveTo {
+    opacity: 0;
+    transform: scale(0.75);
+  }
+}

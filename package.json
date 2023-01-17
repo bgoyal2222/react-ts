@@ -22,7 +22,17 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 6006 -s public",
-    "build-storybook": "build-storybook -s public"
+    "build-storybook": "build-storybook -s public",
+    "lint": "yarn lint:eslint && yarn lint:stylelint && yarn lint:style-dictionary",
+    "lint:ci": "yarn lint:eslint:ci && yarn lint:stylelint && yarn lint:style-dictionary",
+    "lint:eslint": "eslint 'src/**/*.ts?(x)'",
+    "lint:eslint:fix": "eslint 'src/**/*.ts?(x)' --fix",
+    "lint:eslint:ci": "eslint --output-file eslint_report.json --format json 'src/**/*.ts?(x)'",
+    "lint:stylelint": "stylelint 'src/**/*.?(s)css' --custom-formatter=node_modules/stylelint-actions-formatters",
+    "lint:style-dictionary": "yarn build-style-dictionary && git diff --exit-code -- src/styles/_*",
+    "prettier:ci": "prettier --list-different \"**/*.{js,jsx,ts,tsx,scss,json}\"",
+    "prettier": "prettier --write \"**/*.{js,jsx,ts,tsx,scss,json}\" --list-different",
+    "prettier:bin": "prettier"
   },
   "eslintConfig": {
     "extends": [
