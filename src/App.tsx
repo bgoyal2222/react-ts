@@ -1,22 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { Slider } from "./components/Slider";
 
-const App = () => 
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+const App = () => (
+  <div>
+    <h2>Test Slider</h2>
+    <div
+      style={{
+        margin: "100px",
+      }}
+    >
+      <Slider
+        showLabelOnHover={true}
+        marks={[
+          { value: 20, label: "20%" },
+          { value: 50, label: "50%" },
+          { value: 80, label: "80%" },
+        ]}
+      />
     </div>
-  
+  </div>
+);
+
 export default App;
