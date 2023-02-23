@@ -175,15 +175,10 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
     <div
       tabIndex={-1}
       className={cx(classes.sliderRoot, classNames)}
-      ref={ref}
-      size={size}
       ref={useMergedRef(container, ref)}
       onMouseDownCapture={() => container.current?.focus()}
-      styles={styles}
-      disabled={disabled}
-      unstyled={unstyled}
     >
-      {/* <Track
+      <Track
         offset={0}
         filled={position}
         marks={marks}
@@ -223,7 +218,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
         >
           {thumbChildren}
         </Thumb>
-      </Track> */}
+      </Track>
 
       <input type="hidden" name={name} value={scaledValue} />
     </div>

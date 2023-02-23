@@ -19,19 +19,22 @@ export default createStyles((theme, { size, color, disabled }: MarksStyles) => (
     border: `${theme.fn.size({ size, sizes }) >= 8 ? "2px" : "1px"} solid ${
       theme.colorScheme === "dark" ? theme.colors.dark[4] : theme.colors.gray[2]
     }`,
-    height: theme.fn.size({ sizes, size }),
-    width: theme.fn.size({ sizes, size }),
+    // height: theme.fn.size({ sizes, size }),
+    // width: theme.fn.size({ sizes, size }),
+    marginTop: "20px",
+    height: 1.5 * theme.fn.size({ sizes, size }),
+    width: (1 / 10) * theme.fn.size({ sizes, size }),
     borderRadius: 1000,
     transform: `translateX(-${theme.fn.size({ sizes, size }) / 2}px)`,
-    backgroundColor: theme.white,
+    backgroundColor: "#d9d9d9",
   },
 
   markFilled: {
-    borderColor: disabled
-      ? theme.colorScheme === "dark"
-        ? theme.colors.dark[3]
-        : theme.colors.gray[4]
-      : theme.fn.variant({ variant: "filled", color }).background,
+    // borderColor: disabled
+    //   ? theme.colorScheme === "dark"
+    //     ? theme.colors.dark[3]
+    //     : theme.colors.gray[4]
+    //   : theme.fn.variant({ variant: "filled", color }).background,
   },
 
   markLabel: {

@@ -28,8 +28,8 @@ export default createStyles((theme, { color, size, disabled, thumbSize }: ThumbS
     boxSizing: "border-box",
     position: "absolute",
     display: disabled ? "none" : "flex",
-    height: thumbSize || theme.fn.size({ sizes, size }) * 2,
-    width: thumbSize || theme.fn.size({ sizes, size }) * 2,
+    height: 2 * (thumbSize || theme.fn.size({ sizes, size }) * 2),
+    width: 2 * (thumbSize || theme.fn.size({ sizes, size }) * 2),
     backgroundColor:
       theme.colorScheme === "dark"
         ? theme.fn.themeColor(color, theme.fn.primaryShade())
