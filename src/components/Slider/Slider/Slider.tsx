@@ -166,6 +166,74 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
     event.stopPropagation();
   };
 
+  const handleTrackKeydownCapture = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (!disabled) {
+      switch (event.key) {
+        case "ArrowUp": {
+          event.preventDefault();
+          thumb.current.focus();
+          const nextValue = Math.min(Math.max(_value + step, min), max);
+          onChangeEnd?.(nextValue);
+          setValue(nextValue);
+          break;
+        }
+
+        case "ArrowRight": {
+          event.preventDefault();
+          thumb.current.focus();
+          const nextValue = Math.min(
+            Math.max(theme.dir === "rtl" ? _value - step : _value + step, min),
+            max
+          );
+          onChangeEnd?.(nextValue);
+          setValue(nextValue);
+          break;
+        }
+
+        case "ArrowDown": {
+          event.preventDefault();
+          thumb.current.focus();
+          const nextValue = Math.min(Math.max(_value - step, min), max);
+          onChangeEnd?.(nextValue);
+          setValue(nextValue);
+          break;
+        }
+
+        case "ArrowLeft": {
+          event.preventDefault();
+          thumb.current.focus();
+          const nextValue = Math.min(
+            Math.max(theme.dir === "rtl" ? _value + step : _value - step, min),
+            max
+          );
+          onChangeEnd?.(nextValue);
+          setValue(nextValue);
+          break;
+        }
+
+        case "Home": {
+          event.preventDefault();
+          thumb.current.focus();
+          onChangeEnd?.(min);
+          setValue(min);
+          break;
+        }
+
+        case "End": {
+          event.preventDefault();
+          thumb.current.focus();
+          onChangeEnd?.(max);
+          setValue(max);
+          break;
+        }
+
+        default: {
+          break;
+        }
+      }
+    }
+  };
+
   const { classes, cx } = useStyles(
     { size, disabled },
     { classNames, styles, unstyled, name: "Slider" }
@@ -177,6 +245,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
       className={cx(classes.sliderRoot, classNames)}
       ref={useMergedRef(container, ref)}
       onMouseDownCapture={() => container.current?.focus()}
+      onKeyDownCapture={handleTrackKeydownCapture}
     >
       <Track
         offset={0}

@@ -32,8 +32,8 @@ export default createStyles((theme, { color, size, disabled, thumbSize }: ThumbS
     width: 2 * (thumbSize || theme.fn.size({ sizes, size }) * 2),
     backgroundColor:
       theme.colorScheme === "dark"
-        ? theme.fn.themeColor(color, theme.fn.primaryShade())
-        : theme.white,
+        ? theme.white
+        : theme.fn.themeColor(color, theme.fn.primaryShade()),
     border: `4px solid ${
       theme.colorScheme === "dark"
         ? theme.white
