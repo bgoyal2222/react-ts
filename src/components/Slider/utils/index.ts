@@ -15,7 +15,6 @@ export function useComponentDefaultProps<
 	T extends Record<string, any>,
 	U extends Partial<T> = {}
 >(
-	component: string,
 	defaultProps: U,
 	props: T
 ): T & {

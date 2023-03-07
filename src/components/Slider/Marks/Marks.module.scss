@@ -1,48 +1,69 @@
 .markWrapper {
-  position: absolute;
-  top: 0;
-  z-index: 2;
+	position: absolute;
+	top: 0;
+	z-index: 2;
 }
 
 .mark {
-  box-sizing: border-box;
-  height: 14px;
-  width: 4px;
-  margin-top: 20px;
-  border-radius: 1000px;
-  background-color: var(--hb-grey-300);
+	box-sizing: border-box;
+	height: 14px;
+	width: 4px;
+	margin-top: 20px;
+	border-radius: 1000px;
+	background-color: var(--hb-grey-300);
+
+	&--xs {
+		height: 8px;
+        width: 2px;
+	}
+
+	&--s {
+		height: 10px;
+        width: 2px;
+	}
+
+	&--m {
+		height: 12px;
+	}
+
+	&--l {
+		height: 14px;
+	}
+
+	&--xl {
+		height: 16px;
+	}
 }
 
 .markFilled {
-  border-color: var(--hb-grey-300);
+	border-color: var(--hb-grey-300);
 }
 
 .markLabel {
-  transform: translate(-50%, 0);
-  color: var(--hb-grey-500);
-  margin-top: 12px;
-  white-space: nowrap;
+	transform: translate(-50%, 0);
+	color: var(--hb-grey-500);
+	margin-top: 12px;
+	white-space: nowrap;
 }
 
 .fonts {
+	&--xs {
+		font-size: var(--hb-font-size-xxs);
+	}
 
-    &--xs {
-        font-size: var(--hb-font-size-xs);
-    }
+	&--s {
+		font-size: var(--hb-font-size-xs);
+	}
 
-    &--s {
-        font-size: var(--hb-font-size-s);
-    }
+	&--m {
+		font-size: var(--hb-font-size-s);
+	}
 
-    &--m {
-        font-size: var(--hb-font-size-m);
-    }
+	&--l {
+		font-size: var(--hb-font-size-m);
+	}
 
-    &--l {
-        font-size: var(--hb-font-size-l);
-    }
-
-    &--xl {
-        font-size: var(--hb-font-size-xl);
-    }
+	&--xl {
+		font-size: var(--hb-font-size-l);
+	}
 }

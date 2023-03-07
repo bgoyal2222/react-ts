@@ -47,18 +47,26 @@ export function Track({
 			style={{
 				marginRight: calcSize({ size, sizes }),
 				marginLeft: calcSize({ size, sizes }),
-				height: `${calcSize({ size, sizes }) / 2}px`,
+				height: `${calcSize({ size, sizes }) / 1.5}px`,
 			}}
 		>
 			<div
-				className={classNames(styles.bar, !disabled && styles[`bar--${color}`])}
+				className={classNames(
+					styles.bar,
+					!disabled && styles[`bar--${color}`]
+				)}
 				style={{
 					left: `calc(${offset}% - ${calcSize({ size, sizes })}px)`,
 					width: `calc(${filled}% + ${calcSize({ size, sizes })}px)`,
 				}}
 			/>
 			{children}
-			<Marks {...others} size={size} offset={marksOffset} disabled={disabled} />
+			<Marks
+				{...others}
+				size={size}
+				offset={marksOffset}
+				disabled={disabled}
+			/>
 		</div>
 	);
 }

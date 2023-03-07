@@ -63,7 +63,7 @@ export const Thumb = forwardRef<HTMLDivElement, ThumbProps>(
 					dragging && styles.dragging,
 					disabled && styles.disabled,
 					styles[`thumb--${color}`],
-					styles[`fonts--${size}`],
+					styles[`fonts--${size}`]
 				)}
 				aria-label={thumbLabel}
 				aria-valuemax={max}
@@ -83,8 +83,8 @@ export const Thumb = forwardRef<HTMLDivElement, ThumbProps>(
 				onClick={(event) => event.stopPropagation()}
 				style={{
 					left: `${position}%`,
-					height: thumbSize || calcSize({ sizes, size }) * 3,
-					width: thumbSize || calcSize({ sizes, size }) * 3,
+					height: thumbSize || calcSize({ sizes, size }) * 4,
+					width: thumbSize || calcSize({ sizes, size }) * 4,
 				}}
 			>
 				{children}

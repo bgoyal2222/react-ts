@@ -91,8 +91,6 @@ const defaultProps: Partial<SliderProps> = {
 
 export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
 	const {
-		// classNames,
-		// styles,
 		variant,
 		value,
 		onChange,
@@ -114,7 +112,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
 		thumbSize,
 		scale,
 		...others
-	} = useComponentDefaultProps("Slider", defaultProps, props);
+	} = useComponentDefaultProps(defaultProps, props);
 
 	const [hovered, setHovered] = useState(false);
 	const [_value, setValue] = useUncontrolled({
@@ -220,7 +218,11 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
 			ref={useMergedRef(container, ref)}
 			onMouseDownCapture={() => container.current?.focus()}
 			onKeyDownCapture={handleTrackKeydownCapture}
-			className={classNames(styles.sliderRoot, disabled && styles.disabled)}
+			className={classNames(
+				styles.sliderRoot,
+				disabled && styles.disabled
+			)}
+			{...others}
 		>
 			<Track
 				offset={0}
@@ -232,8 +234,12 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
 				max={max}
 				value={scaledValue}
 				onChange={setValue}
-				onMouseEnter={showLabelOnHover ? () => setHovered(true) : undefined}
-				onMouseLeave={showLabelOnHover ? () => setHovered(false) : undefined}
+				onMouseEnter={
+					showLabelOnHover ? () => setHovered(true) : undefined
+				}
+				onMouseLeave={
+					showLabelOnHover ? () => setHovered(false) : undefined
+				}
 				disabled={disabled}
 			>
 				<Thumb
@@ -257,7 +263,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
 				</Thumb>
 			</Track>
 
-			<input type="hidden" name={name} value={scaledValue} />
+			<input type='hidden' name={name} value={scaledValue} />
 		</div>
 	);
 });
