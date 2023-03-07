@@ -1,0 +1,13 @@
+.sliderRoot {
+    -webkit-tap-highlight-color: transparent;
+    outline: 0;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    touch-action: none;
+}
+
+.disabled {
+    cursor: not-allowed;
+}

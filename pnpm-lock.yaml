@@ -20,6 +20,7 @@ specifiers:
   '@types/react-dom': ^18.0.0
   '@vitejs/plugin-react': ^3.1.0
   babel-plugin-named-exports-order: ^0.0.2
+  classnames: ^2.3.2
   eslint-config-prettier: ^8.3.0
   eslint-plugin-functional: ^4.1.1
   eslint-plugin-import: ^2.25.3
@@ -49,6 +50,7 @@ dependencies:
   '@types/node': 16.18.12
   '@types/react': 18.0.28
   '@types/react-dom': 18.0.11
+  classnames: 2.3.2
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
   typescript: 4.9.5
@@ -4289,7 +4291,7 @@ packages:
       '@pmmmwh/react-refresh-webpack-plugin': 0.5.10_webpack@5.75.0
       '@storybook/node-logger': 6.5.16
       '@storybook/react': 6.5.16_qmmwwzoo44lsd3y6jmua5ic44e
-      '@storybook/react-docgen-typescript-plugin': 1.0.2--canary.7.391457fcf6c823971cf02d8e74dbf8e242872b26.0_hhrrucqyg4eysmfpujvov2ym5u
+      '@storybook/react-docgen-typescript-plugin': 1.0.6--canary.9.cd77847.0_hhrrucqyg4eysmfpujvov2ym5u
       '@types/babel__core': 7.20.0
       babel-plugin-react-docgen: 4.2.1
       pnp-webpack-plugin: 1.7.0_typescript@4.9.5
@@ -4333,8 +4335,8 @@ packages:
       util-deprecate: 1.0.2
     dev: true
 
-  /@storybook/react-docgen-typescript-plugin/1.0.2--canary.7.391457fcf6c823971cf02d8e74dbf8e242872b26.0_hhrrucqyg4eysmfpujvov2ym5u:
-    resolution: {integrity: sha512-QDa+qccIygDjdfg6Z/CjPWlNY5ia+oFvy8pK5XCGsNXCpTfVL8gbGa63tonCUeNxqioWLOpysUGsyHR+t4uzPg==}
+  /@storybook/react-docgen-typescript-plugin/1.0.2-canary.6.9d540b91e815f8fc2f8829189deb00553559ff63.0_hhrrucqyg4eysmfpujvov2ym5u:
+    resolution: {integrity: sha512-eVg3BxlOm2P+chijHBTByr90IZVUtgRW56qEOLX7xlww2NBuKrcavBlcmn+HH7GIUktquWkMPtvy6e0W0NgA5w==}
     peerDependencies:
       typescript: '>= 3.x'
       webpack: '>= 4'
@@ -4352,10 +4354,10 @@ packages:
       - supports-color
     dev: true
 
-  /@storybook/react-docgen-typescript-plugin/1.0.2-canary.6.9d540b91e815f8fc2f8829189deb00553559ff63.0_hhrrucqyg4eysmfpujvov2ym5u:
-    resolution: {integrity: sha512-eVg3BxlOm2P+chijHBTByr90IZVUtgRW56qEOLX7xlww2NBuKrcavBlcmn+HH7GIUktquWkMPtvy6e0W0NgA5w==}
+  /@storybook/react-docgen-typescript-plugin/1.0.6--canary.9.cd77847.0_hhrrucqyg4eysmfpujvov2ym5u:
+    resolution: {integrity: sha512-I4oBYmnUCX5IsrZhg+ST72dubSIV4wdwY+SfqJiJ3NHvDpdb240ZjdHAmjIy/yJh5rh42Fl4jbG8Tr4SzwV53Q==}
     peerDependencies:
-      typescript: '>= 3.x'
+      typescript: '>= 4.x'
       webpack: '>= 4'
     dependencies:
       debug: 4.3.4
@@ -6459,6 +6461,10 @@ packages:
       isobject: 3.0.1
       static-extend: 0.1.2
     dev: true
+
+  /classnames/2.3.2:
+    resolution: {integrity: sha512-CSbhY4cFEJRe6/GQzIk5qXZ4Jeg5pcsP7b5peFSDpffpe1cqjASH/n9UTjBwOp6XpMSTwQ8Za2K5V02ueA7Tmw==}
+    dev: false
 
   /clean-css/4.2.4:
     resolution: {integrity: sha512-EJUDT7nDVFDvaQgAo2G/PJvxmp1o/c6iXLbswsBbUFXi1Nr+AjA2cKmfbKDMjMvzEe75g3P6JkaDDAKk96A85A==}
