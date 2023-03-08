@@ -26,42 +26,42 @@ export function Marks({
 	offset,
 	onChange,
 }: MarksProps) {
-console.log({ size });
-
-const items = marks.map((mark, index) => (
-	<div
-		className={classNames(styles.markWrapper, styles[`fonts--${size}`])}
-		style={{ left: `${getPosition({ value: mark.value, min, max })}%` }}
-		key={index}
-	>
+	const items = marks.map((mark, index) => (
 		<div
-			className={classNames(
-				styles.mark,
-				styles[`mark--${size}`],
-				styles.markFilled && isMarkFilled({ mark, value, offset })
-			)}
-			style={{
-				transform: `translateX(-${calcSize({ sizes, size }) / 4}px)`,
-			}}
-		/>
-		{mark.label && (
-			// eslint-disable-next-line jsx-a11y/no-static-element-interactions
+			className={classNames(styles.markWrapper, styles[`fonts--${size}`])}
+			style={{ left: `${getPosition({ value: mark.value, min, max })}%` }}
+			key={index}
+		>
 			<div
-				className={styles.markLabel}
-				onMouseDown={(event) => {
-					event.stopPropagation();
-					onChange(mark.value);
+				className={classNames(
+					styles.mark,
+					styles[`mark--${size}`],
+					styles.markFilled && isMarkFilled({ mark, value, offset })
+				)}
+				style={{
+					transform: `translateX(-${
+						calcSize({ sizes, size }) / 4
+					}px)`,
 				}}
-				onTouchStart={(event) => {
-					event.stopPropagation();
-					onChange(mark.value);
-				}}
-			>
-				{mark.label}
-			</div>
-		)}
-	</div>
-));
+			/>
+			{mark.label && (
+				// eslint-disable-next-line jsx-a11y/no-static-element-interactions
+				<div
+					className={styles.markLabel}
+					onMouseDown={(event) => {
+						event.stopPropagation();
+						onChange(mark.value);
+					}}
+					onTouchStart={(event) => {
+						event.stopPropagation();
+						onChange(mark.value);
+					}}
+				>
+					{mark.label}
+				</div>
+			)}
+		</div>
+	));
 
 	return <div>{items}</div>;
 }

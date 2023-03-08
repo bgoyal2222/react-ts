@@ -1,73 +1,70 @@
-
 .label {
-    position: absolute;
-    top: -45px;
-    background-color: var(--hb-grey-900);
-    color: #fff;
-    padding: 6px;
-    border-radius: 5px;
-    white-space: nowrap;
-    pointer-events: none;
-    user-select: none;
-    touch-action: none;
+	position: absolute;
+	top: -45px;
+	background-color: var(--hb-grey-900);
+	color: #fff;
+	padding: 6px;
+	border-radius: 5px;
+	white-space: nowrap;
+	pointer-events: none;
+	user-select: none;
+	touch-action: none;
 }
 
 .thumb {
-    box-sizing: border-box;
-    position: absolute;
-    display: flex;
+	box-sizing: border-box;
+	position: absolute;
+	display: flex;
+	border: 4px solid #fff;
+	transform: translate(-50%, -50%);
+	top: 50%;
+	cursor: pointer;
+	border-radius: 50%;
+	align-items: center;
+	justify-content: center;
+	transition-duration: 100ms;
+	transition-property: box-shadow, transform;
+	z-index: 3;
+	user-select: none;
+	touch-action: none;
 
-    border: 4px solid #fff;
-    transform: translate(-50%, -50%);
-    top: 50%;
-    cursor: pointer;
-    border-radius: 50%;
-    align-items: center;
-    justify-content: center;
-    transition-duration: 100ms;
-    transition-property: box-shadow, transform;
-    z-index: 3;
-    user-select: none;
-    touch-action: none;
+	&--red {
+		background-color: var(--hb-validation-failure-red-500);
+		color: var(--hb-validation-failure-red-200);
+	}
 
-    &--red {
-        background-color: var(--hb-validation-failure-red-500);
-        color: var(--hb-validation-failure-red-200);
-    }
-
-    &--purple {
-        background-color: var(--hb-primary-purple-700);
-        color: var(--hb-validation-failure-purple-200);
-    }
+	&--purple {
+		background-color: var(--hb-primary-purple-700);
+		color: var(--hb-validation-failure-purple-200);
+	}
 }
 
 .dragging {
-    transform: translate(-50%, -50%) scale(1.1);
+	transform: translate(-50%, -50%) scale(1.1);
 }
 
 .disabled {
-    display: none;
+	display: none;
 }
 
 .fonts {
+	&--xs {
+		font-size: var(--hb-font-size-xxxs);
+	}
 
-    &--xs {
-        font-size: var(--hb-font-size-xxxs);
-    }
+	&--s {
+		font-size: var(--hb-font-size-xxs);
+	}
 
-    &--s {
-        font-size: var(--hb-font-size-xxs);
-    }
+	&--m {
+		font-size: var(--hb-font-size-xs);
+	}
 
-    &--m {
-        font-size: var(--hb-font-size-xs);
-    }
+	&--l {
+		font-size: var(--hb-font-size-s);
+	}
 
-    &--l {
-        font-size: var(--hb-font-size-s);
-    }
-
-    &--xl {
-        font-size: var(--hb-font-size-m);
-    }
+	&--xl {
+		font-size: var(--hb-font-size-m);
+	}
 }

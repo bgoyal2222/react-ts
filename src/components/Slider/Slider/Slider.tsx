@@ -13,7 +13,7 @@ import { DefaultProps, NumberSize, useComponentDefaultProps } from "../utils";
 export interface SliderProps
 	extends DefaultProps,
 		Omit<React.ComponentPropsWithoutRef<"div">, "value" | "onChange"> {
-	/** Color from theme.colors */
+	/** Colors */
 	variant?: "red" | "purple";
 
 	/** Predefined track and thumb size, number to set sizes in px */
@@ -150,67 +150,82 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
 		event.stopPropagation();
 	};
 
-	const handleTrackKeydownCapture = (event: React.KeyboardEvent<HTMLDivElement>) => {
-		if (!disabled) {
-			switch (event.key) {
-				case "ArrowUp": {
-					event.preventDefault();
-					thumb.current.focus();
-					const nextValue = Math.min(Math.max(_value + step, min), max);
-					onChangeEnd?.(nextValue);
-					setValue(nextValue);
-					break;
-				}
+	const handleTrackKeydownCapture = useCallback(
+		(event: React.KeyboardEvent<HTMLDivElement>) => {
+			if (!disabled) {
+				switch (event.key) {
+					case "ArrowUp": {
+						event.preventDefault();
+						thumb.current.focus();
+						const nextValue = Math.min(
+							Math.max(_value + step, min),
+							max
+						);
+						onChangeEnd?.(nextValue);
+						setValue(nextValue);
+						break;
+					}
 
-				case "ArrowRight": {
-					event.preventDefault();
-					thumb.current.focus();
-					const nextValue = Math.min(Math.max(_value + step, min), max);
-					onChangeEnd?.(nextValue);
-					setValue(nextValue);
-					break;
-				}
+					case "ArrowRight": {
+						event.preventDefault();
+						thumb.current.focus();
+						const nextValue = Math.min(
+							Math.max(_value + step, min),
+							max
+						);
+						onChangeEnd?.(nextValue);
+						setValue(nextValue);
+						break;
+					}
 
-				case "ArrowDown": {
-					event.preventDefault();
-					thumb.current.focus();
-					const nextValue = Math.min(Math.max(_value - step, min), max);
-					onChangeEnd?.(nextValue);
-					setValue(nextValue);
-					break;
-				}
+					case "ArrowDown": {
+						event.preventDefault();
+						thumb.current.focus();
+						const nextValue = Math.min(
+							Math.max(_value - step, min),
+							max
+						);
+						onChangeEnd?.(nextValue);
+						setValue(nextValue);
+						break;
+					}
 
-				case "ArrowLeft": {
-					event.preventDefault();
-					thumb.current.focus();
-					const nextValue = Math.min(Math.max(_value - step, min), max);
-					onChangeEnd?.(nextValue);
-					setValue(nextValue);
-					break;
-				}
+					case "ArrowLeft": {
+						event.preventDefault();
+						thumb.current.focus();
+						const nextValue = Math.min(
+							Math.max(_value - step, min),
+							max
+						);
+						onChangeEnd?.(nextValue);
+						setValue(nextValue);
+						break;
+					}
 
-				case "Home": {
-					event.preventDefault();
-					thumb.current.focus();
-					onChangeEnd?.(min);
-					setValue(min);
-					break;
-				}
+					case "Home": {
+						event.preventDefault();
+						thumb.current.focus();
+						onChangeEnd?.(min);
+						setValue(min);
+						break;
+					}
 
-				case "End": {
-					event.preventDefault();
-					thumb.current.focus();
-					onChangeEnd?.(max);
-					setValue(max);
-					break;
-				}
+					case "End": {
+						event.preventDefault();
+						thumb.current.focus();
+						onChangeEnd?.(max);
+						setValue(max);
+						break;
+					}
 
-				default: {
-					break;
+					default: {
+						break;
+					}
 				}
 			}
-		}
-	};
+		},
+		[_value, disabled, min, max, step]
+	);
 
 	return (
 		<div
