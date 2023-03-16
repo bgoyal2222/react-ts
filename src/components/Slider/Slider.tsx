@@ -1,14 +1,14 @@
 import React, { forwardRef, useRef, useState, useCallback } from "react";
-import { useMove, clamp, useUncontrolled, useMergedRef } from "../../../hooks";
+import { useMove, clamp, useUncontrolled, useMergedRef } from "../../hooks";
 
-import { getPosition } from "../utils/get-position";
-import { getChangeValue } from "../utils/get-change-value";
-import { Thumb } from "../Thumb/Thumb";
-import { Track } from "../Track/Track";
+import { getPosition } from "./utils/get-position";
+import { getChangeValue } from "./utils/get-change-value";
+import { Thumb } from "./Thumb/Thumb";
+import { Track } from "./Track/Track";
 
 import classNames from "classnames";
 import styles from "./Slider.module.scss";
-import { DefaultProps, NumberSize, useComponentDefaultProps } from "../utils";
+import { DefaultProps, NumberSize, useComponentDefaultProps } from "./utils";
 
 export interface SliderProps
 	extends DefaultProps,
@@ -20,13 +20,13 @@ export interface SliderProps
 	size?: NumberSize;
 
 	/** Minimal possible value */
-	min?: number;
+	min: number;
 
 	/** Maximum possible value */
-	max?: number;
+	max: number;
 
 	/** Number by which value will be incremented/decremented with thumb drag and arrows */
-	step?: number;
+	step: number;
 
 	/** Amount of digits after the decimal point */
 	precision?: number;
@@ -74,57 +74,44 @@ export interface SliderProps
 	scale?: (value: number) => number;
 }
 
-const defaultProps: Partial<SliderProps> = {
-	variant: "red",
-	size: "m",
-	min: 0,
-	max: 100,
-	step: 1,
-	marks: [],
-	label: (f) => f,
-	labelAlwaysOn: false,
-	thumbLabel: "",
-	showLabelOnHover: true,
-	disabled: false,
-	scale: (v) => v,
-};
-
 export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
 	const {
-		variant,
+		variant = "red",
 		value,
 		onChange,
 		onChangeEnd,
-		size,
-		min,
-		max,
-		step,
+		size = "m",
+		min = 0,
+		max = 100,
+		step = 1,
 		precision,
 		defaultValue,
 		name,
-		marks,
-		label,
-		labelAlwaysOn,
-		thumbLabel,
-		showLabelOnHover,
+		marks = [],
+		label = (f: any) => f,
+		labelAlwaysOn = false,
+		thumbLabel = "",
+		showLabelOnHover = true,
 		thumbChildren,
 		disabled = false,
 		thumbSize,
-		scale,
+		scale = (v: number) => v,
 		...others
-	} = useComponentDefaultProps(defaultProps, props);
+	} = useComponentDefaultProps({}, props);
 
 	const [hovered, setHovered] = useState(false);
 	const [_value, setValue] = useUncontrolled({
 		value: typeof value === "number" ? clamp(value, min, max) : value,
 		defaultValue:
-			typeof defaultValue === "number" ? clamp(defaultValue, min, max) : defaultValue,
+			typeof defaultValue === "number"
+				? clamp(defaultValue, min, max)
+				: defaultValue,
 		finalValue: clamp(0, min, max),
 		onChange,
 	});
 
 	const valueRef = useRef(_value);
-	const thumb = useRef<HTMLDivElement>();
+	const thumb = useRef<HTMLDivElement | null>(null);
 	const position = getPosition({ value: _value, min, max });
 	const scaledValue = scale(_value);
 	const _label = typeof label === "function" ? label(scaledValue) : label;
@@ -132,7 +119,13 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
 	const handleChange = useCallback(
 		({ x }: { x: number }) => {
 			if (!disabled) {
-				const nextValue = getChangeValue({ value: x, min, max, step, precision });
+				const nextValue = getChangeValue({
+					value: x,
+					min,
+					max,
+					step,
+					precision,
+				});
 				setValue(nextValue);
 				valueRef.current = nextValue;
 			}
@@ -145,9 +138,21 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
 	});
 
 	const handleThumbMouseDown = (
-		event: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>
+		event:
+			| React.MouseEvent<HTMLDivElement>
+			| React.TouchEvent<HTMLDivElement>
 	) => {
 		event.stopPropagation();
+	};
+
+	const keyHandleChange = (
+		event: React.KeyboardEvent<HTMLDivElement>,
+		value: number
+	) => {
+		event.preventDefault();
+		thumb.current?.focus();
+		onChangeEnd?.(value);
+		setValue(value);
 	};
 
 	const handleTrackKeydownCapture = useCallback(
@@ -155,66 +160,48 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
 			if (!disabled) {
 				switch (event.key) {
 					case "ArrowUp": {
-						event.preventDefault();
-						thumb.current.focus();
 						const nextValue = Math.min(
 							Math.max(_value + step, min),
 							max
 						);
-						onChangeEnd?.(nextValue);
-						setValue(nextValue);
+						keyHandleChange(event, nextValue);
 						break;
 					}
 
 					case "ArrowRight": {
-						event.preventDefault();
-						thumb.current.focus();
 						const nextValue = Math.min(
 							Math.max(_value + step, min),
 							max
 						);
-						onChangeEnd?.(nextValue);
-						setValue(nextValue);
+						keyHandleChange(event, nextValue);
 						break;
 					}
 
 					case "ArrowDown": {
-						event.preventDefault();
-						thumb.current.focus();
 						const nextValue = Math.min(
 							Math.max(_value - step, min),
 							max
 						);
-						onChangeEnd?.(nextValue);
-						setValue(nextValue);
+						keyHandleChange(event, nextValue);
 						break;
 					}
 
 					case "ArrowLeft": {
-						event.preventDefault();
-						thumb.current.focus();
 						const nextValue = Math.min(
 							Math.max(_value - step, min),
 							max
 						);
-						onChangeEnd?.(nextValue);
-						setValue(nextValue);
+						keyHandleChange(event, nextValue);
 						break;
 					}
 
 					case "Home": {
-						event.preventDefault();
-						thumb.current.focus();
-						onChangeEnd?.(min);
-						setValue(min);
+						keyHandleChange(event, min);
 						break;
 					}
 
 					case "End": {
-						event.preventDefault();
-						thumb.current.focus();
-						onChangeEnd?.(max);
-						setValue(max);
+						keyHandleChange(event, max);
 						break;
 					}
 
@@ -230,6 +217,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
 	return (
 		<div
 			tabIndex={-1}
+			// @ts-ignore
 			ref={useMergedRef(container, ref)}
 			onMouseDownCapture={() => container.current?.focus()}
 			onKeyDownCapture={handleTrackKeydownCapture}

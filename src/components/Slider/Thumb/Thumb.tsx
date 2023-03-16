@@ -24,7 +24,7 @@ export interface ThumbProps {
 	showLabelOnHover?: boolean;
 	children?: React.ReactNode;
 	disabled: boolean;
-	thumbSize: number;
+	thumbSize: number | undefined;
 }
 
 export const Thumb = forwardRef<HTMLDivElement, ThumbProps>(
