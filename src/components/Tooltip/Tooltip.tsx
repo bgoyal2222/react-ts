@@ -2,23 +2,21 @@ import React, { cloneElement, forwardRef, useRef } from "react";
 import { isElement } from "../../hooks";
 import { useMergedRef } from "../../hooks";
 import { TooltipFloating } from "./TooltipFloating/TooltipFloating";
-import { useTooltip } from "./use-tooltip";
+import { useTooltip } from "./utils/use-tooltip";
 import {
 	FloatingArrow,
 	getFloatingPosition,
 	FloatingPosition,
 	ArrowPosition,
-} from "../Floating";
-import { TOOLTIP_ERRORS } from "./Tooltip.errors";
-import { TooltipBaseProps } from "./Tooltip.types";
-import styles from "./Tooltip.module.scss";
+} from "./Floating";
+import { TOOLTIP_ERRORS } from "./utils/Tooltip.errors";
+import { TooltipBaseProps } from "./utils/Tooltip.types";
 import { ForwardRefWithStaticComponents } from "./utils/ForwardRefWithStaticComponents";
 import { useComponentDefaultProps } from "../Slider/utils";
 import classNames from "classnames";
+import styles from "./Tooltip.module.scss";
 
 export interface TooltipProps extends TooltipBaseProps {
-	variant?: string;
-
 	/** Called when tooltip position changes */
 	onPositionChange?(position: FloatingPosition): void;
 
@@ -43,9 +41,6 @@ export interface TooltipProps extends TooltipBaseProps {
 	/** Arrow offset */
 	arrowOffset?: number;
 
-	/** Arrow radius */
-	arrowRadius?: number;
-
 	/** Arrow position **/
 	arrowPosition?: ArrowPosition;
 
@@ -54,38 +49,17 @@ export interface TooltipProps extends TooltipBaseProps {
 
 	/** useEffect dependencies to force update tooltip position */
 	positionDependencies?: any[];
-
-	/** Set if tooltip is attached to an inline element */
-	inline?: boolean;
-
-	/** If set tooltip will not be unmounted from the DOM when it is hidden, display: none styles will be added instead */
-	keepMounted?: boolean;
 }
-
-const defaultProps: Partial<TooltipProps> = {
-	position: "top",
-	refProp: "ref",
-	inline: false,
-	arrowSize: 4,
-	arrowOffset: 5,
-	arrowRadius: 0,
-	arrowPosition: "side",
-	offset: 5,
-	width: "auto",
-	events: { hover: true, focus: false, touch: false },
-	zIndex: 100,
-	positionDependencies: [],
-};
 
 const _Tooltip = forwardRef<HTMLElement, TooltipProps>((props, ref) => {
 	const arrowRef = useRef<HTMLDivElement | null>(null);
 	const {
 		children,
-		position,
-		refProp,
+		position = "top",
+		refProp = "ref",
 		label,
-		openDelay,
-		closeDelay,
+		openDelay = 0,
+		closeDelay = 0,
 		onPositionChange,
 		opened,
 		radius,
@@ -93,25 +67,21 @@ const _Tooltip = forwardRef<HTMLElement, TooltipProps>((props, ref) => {
 		style,
 		className,
 		withArrow,
-		arrowSize,
-		arrowOffset,
-		arrowRadius,
-		arrowPosition,
-		offset,
+		arrowSize = 4,
+		arrowOffset = 5,
+		arrowPosition = "side",
+		offset = 5,
 		multiline,
-		width,
-		events,
-		zIndex,
+		width = "auto",
+		events = { hover: true, focus: false, touch: false },
+		zIndex = 100,
 		disabled,
-		positionDependencies,
+		positionDependencies = [],
 		onClick,
 		onMouseEnter,
 		onMouseLeave,
-		inline,
-		variant,
-		keepMounted,
 		...others
-	} = useComponentDefaultProps(defaultProps, props);
+	} = useComponentDefaultProps({}, props);
 
 	const tooltip = useTooltip({
 		position: getFloatingPosition("ltr", position),
@@ -124,12 +94,11 @@ const _Tooltip = forwardRef<HTMLElement, TooltipProps>((props, ref) => {
 		arrowOffset,
 		offset: offset + (withArrow ? arrowSize / 2 : 0),
 		positionDependencies: [...positionDependencies, children],
-		inline,
+		inline: false,
 	});
 
 	if (!isElement(children)) {
-		console.error(ref);
-		// throw new Error(TOOLTIP_ERRORS.children);
+		throw new Error(TOOLTIP_ERRORS.children);
 	}
 
 	const targetRef = useMergedRef(
@@ -150,6 +119,7 @@ const _Tooltip = forwardRef<HTMLElement, TooltipProps>((props, ref) => {
 						zIndex,
 						top: tooltip.y ?? 0,
 						left: tooltip.x ?? 0,
+						display: tooltip.opened ? "block" : "none",
 					},
 				})}
 			>
@@ -162,7 +132,7 @@ const _Tooltip = forwardRef<HTMLElement, TooltipProps>((props, ref) => {
 					position={tooltip.placement}
 					arrowSize={arrowSize}
 					arrowOffset={arrowOffset}
-					arrowRadius={arrowRadius}
+					arrowRadius={0}
 					arrowPosition={arrowPosition}
 					className={classNames(styles.arrow)}
 				/>
@@ -177,10 +147,6 @@ const _Tooltip = forwardRef<HTMLElement, TooltipProps>((props, ref) => {
 					onPointerDown: props.onPointerDown,
 					onPointerEnter: props.onPointerEnter,
 					[refProp]: targetRef,
-					// className={classNames(
-					//     styles.sliderRoot,
-					//     disabled && styles.disabled
-					// )}
 					...children.props,
 				})
 			)}

@@ -1,6 +1,6 @@
 import React, { forwardRef } from "react";
 import { getArrowPositionStyles } from "./get-arrow-position-styles";
-import { ArrowPosition, FloatingPosition } from "../types";
+import { ArrowPosition, FloatingPosition } from "./types";
 
 interface FloatingArrowProps extends React.ComponentPropsWithoutRef<"div"> {
 	position: FloatingPosition;
@@ -8,9 +8,9 @@ interface FloatingArrowProps extends React.ComponentPropsWithoutRef<"div"> {
 	arrowOffset: number;
 	arrowRadius: number;
 	arrowPosition: ArrowPosition;
-	arrowX: number;
-	arrowY: number;
-	visible: boolean;
+	arrowX?: number;
+	arrowY?: number;
+	visible?: boolean;
 }
 
 export const FloatingArrow = forwardRef<HTMLDivElement, FloatingArrowProps>(
@@ -50,5 +50,3 @@ export const FloatingArrow = forwardRef<HTMLDivElement, FloatingArrowProps>(
 		);
 	}
 );
-
-FloatingArrow.displayName = "@mantine/core/FloatingArrow";

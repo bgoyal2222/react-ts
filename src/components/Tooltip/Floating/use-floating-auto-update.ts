@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { autoUpdate } from "@floating-ui/react";
-import { useDidUpdate } from "../../hooks";
+import { useDidUpdate } from "../../../hooks";
 
 interface Payload {
-	opened: boolean;
+	opened: boolean | undefined;
 	floating: {
 		update(): void;
 		refs: {

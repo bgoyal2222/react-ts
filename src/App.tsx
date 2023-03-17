@@ -5,7 +5,22 @@ import { Tooltip } from "./components/Tooltip";
 
 const MyBadge = forwardRef<HTMLDivElement, { color: string }>(
 	({ color }, ref) => (
-		<div ref={ref} color={color}>
+		<div
+			ref={ref}
+			color={color}
+			tabIndex={0}
+			style={{
+				padding: "1rem",
+				backgroundColor: "black",
+				borderRadius: "0.5rem",
+				color: "white",
+				width: "20rem",
+				boxShadow: "0 0 10px rgba(0, 0, 0, 0.2)",
+				display: "flex",
+				alignItems: "center",
+				justifyContent: "center",
+			}}
+		>
 			Badge
 		</div>
 	)
@@ -14,7 +29,7 @@ const MyBadge = forwardRef<HTMLDivElement, { color: string }>(
 const App = () => (
 	<div
 		style={{
-			marginTop: "10rem",
+			marginTop: "20rem",
 		}}
 	>
 		<div
@@ -95,20 +110,29 @@ const App = () => (
 			}}
 		>
 			<Tooltip
-				position='left'
+				withArrow
+				arrowSize={20}
+				position='top'
 				label={
 					<div
 						style={{
 							display: "flex",
 							flexDirection: "column",
 							gap: "1rem",
+							padding: "1rem",
+							backgroundColor: "white",
+							borderRadius: "0.5rem",
+							color: "black",
+							width: "20rem",
+							boxShadow: "0 0 10px rgba(0, 0, 0, 0.2)",
 						}}
 					>
-						<button>Button</button>
-						<button>Button</button>
-						<button>Button</button>
-						<button>Button</button>
-						<button>Button</button>
+						<h2>Tooltip Heading</h2>
+						<div>
+							Instant payout is activated. $3,450.80 in transit
+							payout from your Shopify store was automatically
+							deposited.
+						</div>
 						<button>Button</button>
 					</div>
 				}

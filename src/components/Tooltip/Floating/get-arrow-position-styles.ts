@@ -1,10 +1,11 @@
+import React from "react";
 import { rem } from "../../../hooks/utils/rem";
 import type {
 	FloatingPosition,
 	FloatingSide,
 	FloatingPlacement,
 	ArrowPosition,
-} from "../types";
+} from "./types";
 
 function horizontalSide(
 	placement: FloatingPlacement | "center",
@@ -52,7 +53,7 @@ function verticalSide(
 const radiusByFloatingSide: Record<
 	FloatingSide,
 	keyof Pick<
-		CSSObject,
+		React.CSSProperties,
 		| "borderBottomLeftRadius"
 		| "borderBottomRightRadius"
 		| "borderTopLeftRadius"
@@ -71,8 +72,8 @@ export function getArrowPositionStyles({
 	arrowOffset,
 	arrowRadius,
 	arrowPosition,
-	arrowX,
-	arrowY,
+	arrowX = 0,
+	arrowY = 0,
 	dir,
 }: {
 	position: FloatingPosition;
@@ -80,8 +81,8 @@ export function getArrowPositionStyles({
 	arrowOffset: number;
 	arrowRadius: number;
 	arrowPosition: ArrowPosition;
-	arrowX: number;
-	arrowY: number;
+	arrowX?: number;
+	arrowY?: number;
 	dir: "rtl" | "ltr";
 }) {
 	const [side, placement = "center"] = position.split("-") as [

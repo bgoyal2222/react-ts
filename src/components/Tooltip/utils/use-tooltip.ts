@@ -15,7 +15,7 @@ import {
 	inline,
 } from "@floating-ui/react";
 import { FloatingPosition, useFloatingAutoUpdate } from "../Floating";
-import { useId, useDidUpdate } from "../../hooks";
+import { useId, useDidUpdate } from "../../../hooks";
 
 interface UseTooltip {
 	position: FloatingPosition;
@@ -24,7 +24,7 @@ interface UseTooltip {
 	onPositionChange?(position: FloatingPosition): void;
 	opened?: boolean;
 	offset: number;
-	arrowRef?: React.RefObject<HTMLDivElement>;
+	arrowRef: React.MutableRefObject<HTMLDivElement | null>;
 	arrowOffset: number;
 	events: { hover: boolean; focus: boolean; touch: boolean };
 	positionDependencies: any[];
@@ -106,8 +106,6 @@ export function useTooltip(settings: UseTooltip) {
 		settings.onPositionChange?.(placement);
 	}, [placement]);
 
-	const isGroupPhase = opened && currentId && currentId !== uid;
-
 	return {
 		x,
 		y,
@@ -117,7 +115,6 @@ export function useTooltip(settings: UseTooltip) {
 		floating,
 		getFloatingProps,
 		getReferenceProps,
-		isGroupPhase,
 		opened,
 		placement,
 	};

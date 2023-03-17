@@ -1,11 +1,12 @@
 import React, { cloneElement } from "react";
 import { useMergedRef } from "../../../hooks";
-import { getDefaultZIndex, useComponentDefaultProps } from "@mantine/styles";
-import { TooltipBaseProps } from "../Tooltip.types";
-import useStyles from "../Tooltip.styles";
-import { TOOLTIP_ERRORS } from "../Tooltip.errors";
+import { TooltipBaseProps } from "../utils/Tooltip.types";
+import { TOOLTIP_ERRORS } from "../utils/Tooltip.errors";
 import { useFloatingTooltip } from "./use-floating-tooltip";
 import { isElement } from "../../../hooks/utils/isElement";
+import { useComponentDefaultProps } from "../../Slider/utils";
+import styles from "./Tooltip.module.scss";
+import classNames from "classnames";
 
 export interface TooltipFloatingProps extends TooltipBaseProps {
 	variant?: string;
@@ -14,47 +15,30 @@ export interface TooltipFloatingProps extends TooltipBaseProps {
 	offset?: number;
 }
 
-const defaultProps: Partial<TooltipFloatingProps> = {
-	refProp: "ref",
-	withinPortal: true,
-	offset: 10,
-	position: "right",
-	zIndex: 100,
-};
-
 export function TooltipFloating(props: TooltipFloatingProps) {
 	const {
 		children,
-		refProp,
-		withinPortal,
+		refProp = "ref",
 		style,
 		className,
-		classNames,
-		styles,
-		unstyled,
 		radius,
 		color,
 		label,
-		offset,
-		position,
+		offset = 10,
+		position = "right",
 		multiline,
 		width,
-		zIndex,
+		zIndex = 100,
 		disabled,
 		variant,
 		...others
-	} = useComponentDefaultProps("TooltipFloating", defaultProps, props);
+	} = useComponentDefaultProps({}, props);
 
 	const { handleMouseMove, x, y, opened, boundaryRef, floating, setOpened } =
 		useFloatingTooltip({
 			offset,
 			position,
 		});
-
-	const { classes, cx } = useStyles(
-		{ radius, color, multiline, width },
-		{ name: "TooltipFloating", classNames, styles, unstyled, variant }
-	);
 
 	if (!isElement(children)) {
 		throw new Error(TOOLTIP_ERRORS.children);
@@ -78,13 +62,13 @@ export function TooltipFloating(props: TooltipFloatingProps) {
 			<div
 				{...others}
 				ref={floating}
-				className={cx(classes.tooltip, className)}
+				className={classNames(styles.tooltip)}
 				style={{
 					...style,
 					zIndex,
 					display: !disabled && opened ? "block" : "none",
 					top: y ?? "",
-					left: Math.round(x) ?? "",
+					left: Math.round(x || 0) ?? "",
 				}}
 			>
 				{label}
