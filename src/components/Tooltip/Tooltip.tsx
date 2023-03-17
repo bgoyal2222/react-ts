@@ -49,6 +49,7 @@ export interface TooltipProps extends TooltipBaseProps {
 
 	/** useEffect dependencies to force update tooltip position */
 	positionDependencies?: any[];
+
 }
 
 const _Tooltip = forwardRef<HTMLElement, TooltipProps>((props, ref) => {
