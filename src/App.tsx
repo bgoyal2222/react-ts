@@ -116,6 +116,11 @@ const App = () => {
 			>
 				<Tooltip
 					// opened={hovered}
+					events={{
+						touch: true,
+						focus: true,
+						hover: true,
+					}}
 					withArrow
 					arrowSize={20}
 					position='top'
