@@ -1,6 +1,7 @@
 .track {
     position: relative;
     width: 100%;
+    border-radius: 6px ;
 
     &::before {
       content: "";
@@ -43,7 +44,7 @@
 }
 
 .disabled {
-
+    
     &--red {
         background-image: repeating-linear-gradient(
             45deg,

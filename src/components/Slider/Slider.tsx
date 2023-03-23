@@ -72,6 +72,15 @@ export interface SliderProps
 
 	/** A transformation function, to change the scale of the slider */
 	scale?: (value: number) => number;
+
+	/** Marks which will be placed on the track which is disabled */
+	disabledMarks?: { value: number; label?: React.ReactNode }[];
+
+	/** By defalt set to 100 which means the main track is in full and disabled track is 0 */
+	trackSize?: number;
+
+	/** By defalt set to 0 which means the disabled main track is in 0 */
+	disabledTrackSize?: number;
 }
 
 export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
@@ -96,6 +105,9 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
 		disabled = false,
 		thumbSize,
 		scale = (v: number) => v,
+		disabledMarks = [],
+		trackSize = 100,
+		disabledTrackSize = 0,
 		...others
 	} = useComponentDefaultProps({}, props);
 
@@ -217,8 +229,6 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
 	return (
 		<div
 			tabIndex={-1}
-			// @ts-ignore
-			ref={useMergedRef(container, ref)}
 			onMouseDownCapture={() => container.current?.focus()}
 			onKeyDownCapture={handleTrackKeydownCapture}
 			className={classNames(
@@ -228,6 +238,9 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
 			{...others}
 		>
 			<Track
+				// @ts-ignore
+				ref={useMergedRef(container, ref)}
+				className={classNames(disabled && styles.disabled)}
 				offset={0}
 				filled={position}
 				marks={marks}
@@ -244,6 +257,9 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
 					showLabelOnHover ? () => setHovered(false) : undefined
 				}
 				disabled={disabled}
+				style={{
+					width: `${trackSize}%`,
+				}}
 			>
 				<Thumb
 					max={max}
@@ -265,8 +281,24 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
 					{thumbChildren}
 				</Thumb>
 			</Track>
-
 			<input type='hidden' name={name} value={scaledValue} />
+			<Track
+				className={classNames(styles.disabled)}
+				style={{
+					width: `${disabledTrackSize}%`,
+					cursor: "not-allowed",
+				}}
+				offset={0}
+				filled={position}
+				marks={disabledMarks}
+				size={size}
+				color={variant}
+				min={min}
+				max={100}
+				value={scaledValue}
+				onChange={setValue}
+				disabled={true}
+			/>
 		</div>
 	);
 });

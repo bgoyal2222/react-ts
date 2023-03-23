@@ -28,7 +28,7 @@ const MyBadge = forwardRef<HTMLDivElement, { color: string; other: any }>(
 );
 
 const App = () => {
-	// const [hovered, setHovered] = useState(false);
+	const [hovered, setHovered] = useState(false);
 
 	return (
 		<div
@@ -38,7 +38,7 @@ const App = () => {
 		>
 			<div
 				style={{
-					display: "none",
+					// display: "none",
 					margin: "6rem",
 				}}
 			>
@@ -67,18 +67,27 @@ const App = () => {
 						showLabelOnHover={true}
 						min={0}
 						max={50}
+						trackSize={60}
+						disabledTrackSize={60}
 						marks={[
 							{ value: 0, label: "$0" },
 							{ value: 20, label: "$20" },
 							{ value: 40, label: "$40" },
 							{ value: 60, label: "$60" },
 						]}
+						disabledMarks={[
+							{ value: 20, label: "$120" },
+							{ value: 80, label: "$160" },
+						]}
 					/>
 					<Slider
+						label={(value) => `${value}%`}
 						labelAlwaysOn
 						variant='red'
 						showLabelOnHover={true}
 						defaultValue={50}
+						trackSize={60}
+						disabledTrackSize={40}
 						marks={[
 							{ value: 0, label: "$0" },
 							{ value: 20, label: "$20" },
@@ -86,6 +95,10 @@ const App = () => {
 							{ value: 60, label: "$60" },
 							{ value: 80, label: "$80" },
 							{ value: 100, label: "$100" },
+						]}
+						disabledMarks={[
+							{ value: 20, label: "$120" },
+							{ value: 50, label: "$160" },
 						]}
 					/>
 					<Slider
@@ -112,10 +125,11 @@ const App = () => {
 					justifyContent: "center",
 					fontFamily: "sans-serif",
 					fontSize: "1.5rem",
+					display: "none",
 				}}
 			>
 				<Tooltip
-					// opened={hovered}
+					opened={hovered}
 					events={{
 						touch: true,
 						focus: true,
@@ -123,10 +137,10 @@ const App = () => {
 					}}
 					withArrow
 					arrowSize={20}
-					position='top'
+					position='left'
 					label={
 						<div
-							// onMouseLeave={() => setHovered(false)}
+							onMouseLeave={() => setHovered(false)}
 							style={{
 								display: "flex",
 								flexDirection: "column",
@@ -150,9 +164,9 @@ const App = () => {
 					}
 				>
 					<MyBadge
-						// onMouseEnter={() => {
-						// 	setHovered(true);
-						// }}
+						onMouseEnter={() => {
+							setHovered(true);
+						}}
 						color={"red"}
 					/>
 				</Tooltip>

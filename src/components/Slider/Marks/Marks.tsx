@@ -24,6 +24,7 @@ export function Marks({
 	max,
 	value,
 	offset,
+	disabled,
 	onChange,
 }: MarksProps) {
 	const items = marks.map((mark, index) => (
@@ -49,10 +50,12 @@ export function Marks({
 				<div
 					className={styles.markLabel}
 					onMouseDown={(event) => {
+						if (disabled) return;
 						event.stopPropagation();
 						onChange(mark.value);
 					}}
 					onTouchStart={(event) => {
+						if (disabled) return;
 						event.stopPropagation();
 						onChange(mark.value);
 					}}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import { Marks } from "../Marks/Marks";
 
 import classNames from "classnames";
@@ -15,58 +15,75 @@ export interface TrackProps extends DefaultProps {
 	min: number;
 	max: number;
 	value: number;
-	children: React.ReactNode;
+	children?: React.ReactNode;
 	onChange(value: number): void;
 	onMouseEnter?(event?: React.MouseEvent<HTMLDivElement>): void;
 	onMouseLeave?(event?: React.MouseEvent<HTMLDivElement>): void;
 	disabled: boolean;
+	trackRef?: React.MutableRefObject<HTMLDivElement | undefined>;
 }
 
-export function Track({
-	size,
-	filled,
-	color,
-	children,
-	offset,
-	onMouseLeave,
-	onMouseEnter,
-	disabled,
-	marksOffset,
-	unstyled,
-	...others
-}: TrackProps) {
-	return (
-		<div
-			className={classNames(
-				styles.track,
-				!disabled && styles[`track--${color}`],
-				disabled && styles[`disabled--${color}`]
-			)}
-			onMouseLeave={onMouseLeave}
-			onMouseEnter={onMouseEnter}
-			style={{
-				marginRight: calcSize({ size, sizes }),
-				marginLeft: calcSize({ size, sizes }),
-				height: `${calcSize({ size, sizes }) / 1.5}px`,
-			}}
-		>
+export const Track = forwardRef<HTMLDivElement, TrackProps>(
+	(
+		{
+			size,
+			filled,
+			color,
+			children,
+			offset,
+			onMouseLeave,
+			onMouseEnter,
+			disabled,
+			marksOffset,
+			unstyled,
+			trackRef,
+			style,
+			...others
+		}: TrackProps,
+		ref
+	) => {
+		return (
 			<div
+				ref={ref}
 				className={classNames(
-					styles.bar,
-					!disabled && styles[`bar--${color}`]
+					styles.track,
+					!disabled && styles[`track--${color}`],
+					disabled && styles[`disabled--${color}`]
 				)}
+				onMouseLeave={onMouseLeave}
+				onMouseEnter={onMouseEnter}
 				style={{
-					left: `calc(${offset}% - ${calcSize({ size, sizes })}px)`,
-					width: `calc(${filled}% + ${calcSize({ size, sizes })}px)`,
+					marginRight: calcSize({ size, sizes }),
+					marginLeft: calcSize({ size, sizes }),
+					height: `${calcSize({ size, sizes }) / 1.5}px`,
+					...style,
 				}}
-			/>
-			{children}
-			<Marks
-				{...others}
-				size={size}
-				offset={marksOffset}
-				disabled={disabled}
-			/>
-		</div>
-	);
-}
+			>
+				<div
+					className={classNames(
+						styles.bar,
+						!disabled && styles[`bar--${color}`],
+                        'slider--track'
+					)}
+					style={{
+						left: `calc(${offset}% - ${calcSize({
+							size,
+							sizes,
+						})}px)`,
+						width: `calc(${filled}% + ${calcSize({
+							size,
+							sizes,
+						})}px)`,
+					}}
+				/>
+				{children && children}
+				<Marks
+					{...others}
+					size={size}
+					offset={marksOffset}
+					disabled={disabled}
+				/>
+			</div>
+		);
+	}
+);
