@@ -42,13 +42,15 @@ export const Track = forwardRef<HTMLDivElement, TrackProps>(
 		}: TrackProps,
 		ref
 	) => {
+
 		return (
 			<div
 				ref={ref}
 				className={classNames(
 					styles.track,
 					!disabled && styles[`track--${color}`],
-					disabled && styles[`disabled--${color}`]
+					disabled && styles[`disabled--${color}`],
+					"slider__track__container"
 				)}
 				onMouseLeave={onMouseLeave}
 				onMouseEnter={onMouseEnter}
@@ -63,7 +65,7 @@ export const Track = forwardRef<HTMLDivElement, TrackProps>(
 					className={classNames(
 						styles.bar,
 						!disabled && styles[`bar--${color}`],
-                        'slider--track'
+						!disabled ? "slider__track" : "slider__track--disabled"
 					)}
 					style={{
 						left: `calc(${offset}% - ${calcSize({

@@ -1,67 +1,67 @@
 .track {
-    position: relative;
-    width: 100%;
-    border-radius: 6px ;
+	position: relative;
+	width: 100%;
+    border-radius: 4px;
+    
+	&::before {
+        border-radius: 4px;
+		content: "";
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		z-index: 0;
+		left: -8px;
+		right: -8px;
+	}
 
-    &::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      border-radius: 6px;
-      z-index: 0;
-      left: -8px;
-      right: -8px;
-    }
+	&--red {
+		&::before {
+			background-color: var(--hb-validation-failure-red-200);
+		}
+	}
 
-    &--red {
-        &::before {
-            background-color: var(--hb-validation-failure-red-200);
-        }
-    }
-
-    &--purple {
-        &::before {
-            background-color: var(--hb-primary-purple-200);
-        }
-    }
+	&--purple {
+		&::before {
+			background-color: var(--hb-primary-purple-200);
+		}
+	}
 }
 
 .bar {
-    position: absolute;
-    z-index: 1;
-    top: 0;
-    bottom: 0;
-    border-radius: 20px;
+	position: absolute;
+	z-index: 1;
+	top: 0;
+	bottom: 0;
+    border-radius: 4px;     // Here condition is not required bcoz this will always be for left no need to toggle
 
-    &--red {
-        background-color: var(--hb-validation-failure-red-500);
-    }
+	&--red {
+		background-color: var(--hb-validation-failure-red-500);
+	}
 
-    &--purple {
-        background-color: var(--hb-primary-purple-500);
-    }
+	&--purple {
+		background-color: var(--hb-primary-purple-500);
+	}
 }
 
 .disabled {
-    
-    &--red {
-        background-image: repeating-linear-gradient(
-            45deg,
-            var(--hb-validation-failure-red-200),
-            var(--hb-validation-failure-red-200) 10px,
-            var(--hb-validation-failure-red-300) 10px,
-            var(--hb-validation-failure-red-300) 20px
-        );
-    }
 
-    &--purple {
-        background-image: repeating-linear-gradient(
-            45deg,
-            var(--hb-primary-purple-200),
-            var(--hb-primary-purple-200) 10px,
-            var(--hb-primary-purple-300) 10px,
-            var(--hb-primary-purple-300) 20px
-        );
-    }
+	&--red {
+		background-image: repeating-linear-gradient(
+			45deg,
+			var(--hb-validation-failure-red-200),
+			var(--hb-validation-failure-red-200) 10px,
+			var(--hb-validation-failure-red-300) 10px,
+			var(--hb-validation-failure-red-300) 20px
+		);
+	}
+
+	&--purple {
+		background-image: repeating-linear-gradient(
+			45deg,
+			var(--hb-primary-purple-200),
+			var(--hb-primary-purple-200) 10px,
+			var(--hb-primary-purple-300) 10px,
+			var(--hb-primary-purple-300) 20px
+		);
+	}
 }
