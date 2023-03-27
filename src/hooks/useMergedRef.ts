@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import { assignRef } from "./utils/assignRef";
 
-type Ref<T> = React.Dispatch<React.SetStateAction<T>> | React.ForwardedRef<T>;
+type Ref<T> = React.ForwardedRef<T>;
 
 export function mergeRefs<T = any>(...refs: Ref<T>[]) {
   return (node: T | null) => {

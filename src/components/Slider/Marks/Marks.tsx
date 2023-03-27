@@ -24,6 +24,7 @@ export function Marks({
 	max,
 	value,
 	offset,
+	disabled,
 	onChange,
 }: MarksProps) {
 	const items = marks.map((mark, index) => (
@@ -46,19 +47,7 @@ export function Marks({
 			/>
 			{mark.label && (
 				// eslint-disable-next-line jsx-a11y/no-static-element-interactions
-				<div
-					className={styles.markLabel}
-					onMouseDown={(event) => {
-						event.stopPropagation();
-						onChange(mark.value);
-					}}
-					onTouchStart={(event) => {
-						event.stopPropagation();
-						onChange(mark.value);
-					}}
-				>
-					{mark.label}
-				</div>
+				<div className={styles.markLabel}>{mark.label}</div>
 			)}
 		</div>
 	));

@@ -3,8 +3,8 @@
 	top: -45px;
 	background-color: var(--hb-grey-900);
 	color: #fff;
-	padding: 6px;
-	border-radius: 5px;
+	padding: 8px;
+	border-radius: 4px;
 	white-space: nowrap;
 	pointer-events: none;
 	user-select: none;
@@ -15,13 +15,13 @@
 	box-sizing: border-box;
 	position: absolute;
 	display: flex;
-	border: 4px solid #fff;
-	transform: translate(-50%, -50%);
-	top: 50%;
-	cursor: pointer;
-	border-radius: 50%;
 	align-items: center;
 	justify-content: center;
+	border: 4px solid #fff;
+	transform: translate(-50%, -50%);
+    top: 50%;
+	cursor: pointer;
+	border-radius: 50%;
 	transition-duration: 100ms;
 	transition-property: box-shadow, transform;
 	z-index: 3;
@@ -44,7 +44,9 @@
 }
 
 .disabled {
-	display: none;
+    opacity: 1;
+    cursor: not-allowed;
+    // filter: grayscale(40%);  // Uncomment this if you want Thumb of disabled Slider to be grayed out, not provided in design
 }
 
 .fonts {

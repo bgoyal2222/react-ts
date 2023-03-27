@@ -13,20 +13,14 @@ import { DefaultProps, NumberSize, useComponentDefaultProps } from "./utils";
 export interface SliderProps
 	extends DefaultProps,
 		Omit<React.ComponentPropsWithoutRef<"div">, "value" | "onChange"> {
-	/** Colors */
+	/** Vairants for the Slider, Defaults to Red */
 	variant?: "red" | "purple";
 
 	/** Predefined track and thumb size, number to set sizes in px */
 	size?: NumberSize;
 
-	/** Minimal possible value */
-	min: number;
-
-	/** Maximum possible value */
-	max: number;
-
 	/** Number by which value will be incremented/decremented with thumb drag and arrows */
-	step: number;
+	step?: number;
 
 	/** Amount of digits after the decimal point */
 	precision?: number;
@@ -43,9 +37,6 @@ export interface SliderProps
 	/** Called when user stops dragging slider or changes value with arrows */
 	onChangeEnd?(value: number): void;
 
-	/** Hidden input name, use with uncontrolled variant */
-	name?: string;
-
 	/** Marks which will be placed on the track */
 	marks?: { value: number; label?: React.ReactNode }[];
 
@@ -55,23 +46,20 @@ export interface SliderProps
 	/** If true label will be not be hidden when user stops dragging */
 	labelAlwaysOn?: boolean;
 
-	/** Thumb aria-label */
-	thumbLabel?: string;
-
 	/** If true slider label will appear on hover */
 	showLabelOnHover?: boolean;
 
 	/** Thumb children, can be used to add icon */
 	thumbChildren?: React.ReactNode;
 
-	/** Disables slider */
+	/** Disables the slider completely */
 	disabled?: boolean;
 
 	/** Thumb width and height in px */
 	thumbSize?: number;
 
-	/** A transformation function, to change the scale of the slider */
-	scale?: (value: number) => number;
+	/** Percentage of the slider that is disabled */
+	disabledPercentage?: number;
 }
 
 export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
@@ -81,30 +69,34 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
 		onChange,
 		onChangeEnd,
 		size = "m",
-		min = 0,
-		max = 100,
 		step = 1,
 		precision,
 		defaultValue,
-		name,
 		marks = [],
 		label = (f: any) => f,
 		labelAlwaysOn = false,
-		thumbLabel = "",
 		showLabelOnHover = true,
 		thumbChildren,
 		disabled = false,
 		thumbSize,
-		scale = (v: number) => v,
+		disabledPercentage = 0,
 		...others
 	} = useComponentDefaultProps({}, props);
 
+	const min = 0,
+		max = 100;
 	const [hovered, setHovered] = useState(false);
 	const [_value, setValue] = useUncontrolled({
 		value: typeof value === "number" ? clamp(value, min, max) : value,
 		defaultValue:
 			typeof defaultValue === "number"
-				? clamp(defaultValue, min, max)
+				? clamp(
+						defaultValue,
+						min,
+						Number(
+							disabledPercentage !== 0 ? disabledPercentage : max
+						)
+				  )
 				: defaultValue,
 		finalValue: clamp(0, min, max),
 		onChange,
@@ -113,7 +105,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
 	const valueRef = useRef(_value);
 	const thumb = useRef<HTMLDivElement | null>(null);
 	const position = getPosition({ value: _value, min, max });
-	const scaledValue = scale(_value);
+	const scaledValue = _value;
 	const _label = typeof label === "function" ? label(scaledValue) : label;
 
 	const handleChange = useCallback(
@@ -126,11 +118,18 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
 					step,
 					precision,
 				});
-				setValue(nextValue);
+
+				if (
+					nextValue <=
+					Number(disabledPercentage !== 0 ? disabledPercentage : max)
+				) {
+					setValue(nextValue);
+				}
+
 				valueRef.current = nextValue;
 			}
 		},
-		[disabled, min, max, step, precision]
+		[disabled, min, max, step, precision, disabledPercentage]
 	);
 
 	const { ref: container, active } = useMove(handleChange, {
@@ -217,8 +216,6 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
 	return (
 		<div
 			tabIndex={-1}
-			// @ts-ignore
-			ref={useMergedRef(container, ref)}
 			onMouseDownCapture={() => container.current?.focus()}
 			onKeyDownCapture={handleTrackKeydownCapture}
 			className={classNames(
@@ -228,6 +225,9 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
 			{...others}
 		>
 			<Track
+				// @ts-ignore
+				ref={useMergedRef(container, ref)}
+				className={classNames(disabled && styles.disabled)}
 				offset={0}
 				filled={position}
 				marks={marks}
@@ -244,6 +244,10 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
 					showLabelOnHover ? () => setHovered(false) : undefined
 				}
 				disabled={disabled}
+				style={{
+					width: `${100}%`,
+				}}
+				disabledPercentage={disabledPercentage}
 			>
 				<Thumb
 					max={max}
@@ -257,7 +261,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
 					ref={thumb}
 					onMouseDown={handleThumbMouseDown}
 					labelAlwaysOn={labelAlwaysOn}
-					thumbLabel={thumbLabel}
+					thumbLabel={"Slider Seek"}
 					showLabelOnHover={showLabelOnHover && hovered}
 					disabled={disabled}
 					thumbSize={thumbSize}
@@ -265,8 +269,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
 					{thumbChildren}
 				</Thumb>
 			</Track>
-
-			<input type='hidden' name={name} value={scaledValue} />
+			<input type='hidden' name={"Slider"} value={scaledValue} />
 		</div>
 	);
 });
