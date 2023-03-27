@@ -21,6 +21,7 @@ export interface TrackProps extends DefaultProps {
 	onMouseLeave?(event?: React.MouseEvent<HTMLDivElement>): void;
 	disabled: boolean;
 	trackRef?: React.MutableRefObject<HTMLDivElement | undefined>;
+	disabledPercentage: number;
 }
 
 export const Track = forwardRef<HTMLDivElement, TrackProps>(
@@ -38,11 +39,11 @@ export const Track = forwardRef<HTMLDivElement, TrackProps>(
 			unstyled,
 			trackRef,
 			style,
+			disabledPercentage,
 			...others
 		}: TrackProps,
 		ref
 	) => {
-
 		return (
 			<div
 				ref={ref}
@@ -78,7 +79,28 @@ export const Track = forwardRef<HTMLDivElement, TrackProps>(
 						})}px)`,
 					}}
 				/>
-				{children && children}
+				{disabledPercentage > 0 && (
+					<div
+						className={classNames(
+							styles.bar,
+							styles[`disabled--${color}`],
+							"slider__track__container"
+						)}
+						style={{
+							right: `calc(${offset}% - ${calcSize({
+								size,
+								sizes,
+							})}px)`,
+							width: `calc(${
+								100 - disabledPercentage
+							}% + ${calcSize({
+								size,
+								sizes,
+							})}px)`,
+						}}
+					/>
+				)}
+				{children}
 				<Marks
 					{...others}
 					size={size}

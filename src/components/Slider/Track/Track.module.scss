@@ -10,6 +10,8 @@
 		top: 0;
 		bottom: 0;
 		z-index: 0;
+        // Neagtive values are to compensate with the relative track container, make it 0 and it will stick to the marks.
+        // A little margin is needed to show that marks lie inside the track
 		left: -8px;
 		right: -8px;
 	}
@@ -45,23 +47,50 @@
 
 .disabled {
 
+
 	&--red {
 		background-image: repeating-linear-gradient(
 			45deg,
 			var(--hb-validation-failure-red-200),
-			var(--hb-validation-failure-red-200) 10px,
-			var(--hb-validation-failure-red-300) 10px,
-			var(--hb-validation-failure-red-300) 20px
+			var(--hb-validation-failure-red-200) 8px,
+			var(--hb-validation-failure-red-300) 8px,
+			var(--hb-validation-failure-red-300) 24px
 		);
-	}
+
+        &::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background-color: var(--hb-base-white);
+            opacity: 1;
+            z-index: 1;
+        
+        }
+    }
 
 	&--purple {
 		background-image: repeating-linear-gradient(
 			45deg,
 			var(--hb-primary-purple-200),
-			var(--hb-primary-purple-200) 10px,
-			var(--hb-primary-purple-300) 10px,
-			var(--hb-primary-purple-300) 20px
+			var(--hb-primary-purple-200) 8px,
+			var(--hb-primary-purple-300) 8px,
+			var(--hb-primary-purple-300) 24px
 		);
+
+        &::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background-color: var(--hb-base-white);
+            opacity: 1;
+            z-index: 1;
+        }
 	}
+
 }

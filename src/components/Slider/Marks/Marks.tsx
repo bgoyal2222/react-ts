@@ -47,21 +47,7 @@ export function Marks({
 			/>
 			{mark.label && (
 				// eslint-disable-next-line jsx-a11y/no-static-element-interactions
-				<div
-					className={styles.markLabel}
-					onMouseDown={(event) => {
-						if (disabled) return;
-						event.stopPropagation();
-						onChange(mark.value);
-					}}
-					onTouchStart={(event) => {
-						if (disabled) return;
-						event.stopPropagation();
-						onChange(mark.value);
-					}}
-				>
-					{mark.label}
-				</div>
+				<div className={styles.markLabel}>{mark.label}</div>
 			)}
 		</div>
 	));

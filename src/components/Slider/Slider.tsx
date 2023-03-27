@@ -19,12 +19,6 @@ export interface SliderProps
 	/** Predefined track and thumb size, number to set sizes in px */
 	size?: NumberSize;
 
-	/** Minimal possible value */
-	min?: number;
-
-	/** Maximum possible value */
-	max?: number;
-
 	/** Number by which value will be incremented/decremented with thumb drag and arrows */
 	step?: number;
 
@@ -43,9 +37,6 @@ export interface SliderProps
 	/** Called when user stops dragging slider or changes value with arrows */
 	onChangeEnd?(value: number): void;
 
-	/** Hidden input name, use with uncontrolled variant */
-	name?: string;
-
 	/** Marks which will be placed on the track */
 	marks?: { value: number; label?: React.ReactNode }[];
 
@@ -55,9 +46,6 @@ export interface SliderProps
 	/** If true label will be not be hidden when user stops dragging */
 	labelAlwaysOn?: boolean;
 
-	/** Thumb aria-label */
-	thumbLabel?: string;
-
 	/** If true slider label will appear on hover */
 	showLabelOnHover?: boolean;
 
@@ -66,21 +54,12 @@ export interface SliderProps
 
 	/** Disables slider */
 	disabled?: boolean;
+	// show values in disabled
 
 	/** Thumb width and height in px */
 	thumbSize?: number;
 
-	/** A transformation function, to change the scale of the slider */
-	scale?: (value: number) => number;
-
-	/** Marks which will be placed on the track which is disabled */
-	disabledMarks?: { value: number; label?: React.ReactNode }[];
-
-	/** By defalt set to 100 which means the main track is in full and disabled track is 0 */
-	trackSize?: number;
-
-	/** By defalt set to 0 which means the disabled main track is in 0 */
-	disabledTrackSize?: number;
+	disabledPercentage?: number;
 }
 
 export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
@@ -90,33 +69,34 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
 		onChange,
 		onChangeEnd,
 		size = "m",
-		min = 0,
-		max = 100,
 		step = 1,
 		precision,
 		defaultValue,
-		name,
 		marks = [],
 		label = (f: any) => f,
 		labelAlwaysOn = false,
-		thumbLabel = "",
 		showLabelOnHover = true,
 		thumbChildren,
 		disabled = false,
 		thumbSize,
-		scale = (v: number) => v,
-		disabledMarks = [],
-		trackSize = 100,
-		disabledTrackSize = 0,
+		disabledPercentage = 0,
 		...others
 	} = useComponentDefaultProps({}, props);
 
+	const min = 0,
+		max = 100;
 	const [hovered, setHovered] = useState(false);
 	const [_value, setValue] = useUncontrolled({
 		value: typeof value === "number" ? clamp(value, min, max) : value,
 		defaultValue:
 			typeof defaultValue === "number"
-				? clamp(defaultValue, min, max)
+				? clamp(
+						defaultValue,
+						min,
+						Number(
+							disabledPercentage !== 0 ? disabledPercentage : max
+						)
+				  )
 				: defaultValue,
 		finalValue: clamp(0, min, max),
 		onChange,
@@ -125,7 +105,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
 	const valueRef = useRef(_value);
 	const thumb = useRef<HTMLDivElement | null>(null);
 	const position = getPosition({ value: _value, min, max });
-	const scaledValue = scale(_value);
+	const scaledValue = _value;
 	const _label = typeof label === "function" ? label(scaledValue) : label;
 
 	const handleChange = useCallback(
@@ -138,11 +118,18 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
 					step,
 					precision,
 				});
-				setValue(nextValue);
+
+				if (
+					nextValue <=
+					Number(disabledPercentage !== 0 ? disabledPercentage : max)
+				) {
+					setValue(nextValue);
+				}
+
 				valueRef.current = nextValue;
 			}
 		},
-		[disabled, min, max, step, precision]
+		[disabled, min, max, step, precision, disabledPercentage]
 	);
 
 	const { ref: container, active } = useMove(handleChange, {
@@ -258,8 +245,9 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
 				}
 				disabled={disabled}
 				style={{
-					width: `${trackSize}%`,
+					width: `${100}%`,
 				}}
+				disabledPercentage={disabledPercentage}
 			>
 				<Thumb
 					max={max}
@@ -273,7 +261,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
 					ref={thumb}
 					onMouseDown={handleThumbMouseDown}
 					labelAlwaysOn={labelAlwaysOn}
-					thumbLabel={thumbLabel}
+					thumbLabel={"Slider Seek"}
 					showLabelOnHover={showLabelOnHover && hovered}
 					disabled={disabled}
 					thumbSize={thumbSize}
@@ -281,24 +269,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
 					{thumbChildren}
 				</Thumb>
 			</Track>
-			<input type='hidden' name={name} value={scaledValue} />
-			<Track
-				className={classNames(styles.disabled)}
-				style={{
-					width: `${disabledTrackSize}%`,
-					cursor: "not-allowed",
-				}}
-				offset={0}
-				filled={position}
-				marks={disabledMarks}
-				size={size}
-				color={variant}
-				min={min}
-				max={100}
-				value={scaledValue}
-				onChange={setValue}
-				disabled={true}
-			/>
+			<input type='hidden' name={"Slider"} value={scaledValue} />
 		</div>
 	);
 });

@@ -64,21 +64,15 @@ const App = () => {
 				>
 					<Slider
 						disabled
+						defaultValue={50}
 						showLabelOnHover={true}
-						min={0}
-						max={50}
-						trackSize={60}
-						disabledTrackSize={60}
 						marks={[
 							{ value: 0, label: "$0" },
 							{ value: 20, label: "$20" },
 							{ value: 40, label: "$40" },
 							{ value: 60, label: "$60" },
 						]}
-						disabledMarks={[
-							{ value: 20, label: "$120" },
-							{ value: 80, label: "$160" },
-						]}
+						disabledPercentage={50}
 					/>
 					<Slider
 						label={(value) => `${value}%`}
@@ -86,8 +80,6 @@ const App = () => {
 						variant='red'
 						showLabelOnHover={true}
 						defaultValue={50}
-						trackSize={60}
-						disabledTrackSize={40}
 						marks={[
 							{ value: 0, label: "$0" },
 							{ value: 20, label: "$20" },
@@ -96,10 +88,7 @@ const App = () => {
 							{ value: 80, label: "$80" },
 							{ value: 100, label: "$100" },
 						]}
-						disabledMarks={[
-							{ value: 20, label: "$120" },
-							{ value: 50, label: "$160" },
-						]}
+						disabledPercentage={20}
 					/>
 					<Slider
 						size='l'

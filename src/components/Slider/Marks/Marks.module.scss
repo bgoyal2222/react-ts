@@ -6,16 +6,15 @@
 
 .mark {
 	box-sizing: border-box;
-	height: 14px;
-	width: 4px;
-	margin-top: 20px;
-	border-radius: 1000px;
+	width: 4px;     // this is fallback value
+	margin-top: 24px;
+	border-radius: 100px;
 	background-color: var(--hb-grey-300);
 
 	&--xs {
 		height: 8px;
-        width: 2px;
-	}
+        width: 2px;     // Width needs to be defined here, since the element is div 
+	}                   // and to show that specific pill shaped mark it must have width
 
 	&--s {
 		height: 10px;
@@ -27,8 +26,8 @@
 	}
 
 	&--l {
-		height: 14px;
-	}
+		height: 14px;   // As per the design system we dont have any specifci values, 
+	}                   // multiples of 8 cant be used as it will no longer be a pill shape
 
 	&--xl {
 		height: 16px;
@@ -42,7 +41,7 @@
 .markLabel {
 	transform: translate(-50%, 0);
 	color: var(--hb-grey-500);
-	margin-top: 12px;
+	margin-top: 16px;
 	white-space: nowrap;
 }
 
