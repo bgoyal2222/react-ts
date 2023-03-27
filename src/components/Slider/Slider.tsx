@@ -13,7 +13,7 @@ import { DefaultProps, NumberSize, useComponentDefaultProps } from "./utils";
 export interface SliderProps
 	extends DefaultProps,
 		Omit<React.ComponentPropsWithoutRef<"div">, "value" | "onChange"> {
-	/** Colors */
+	/** Vairants for the Slider, Defaults to Red */
 	variant?: "red" | "purple";
 
 	/** Predefined track and thumb size, number to set sizes in px */
@@ -52,13 +52,13 @@ export interface SliderProps
 	/** Thumb children, can be used to add icon */
 	thumbChildren?: React.ReactNode;
 
-	/** Disables slider */
+	/** Disables the slider completely */
 	disabled?: boolean;
-	// show values in disabled
 
 	/** Thumb width and height in px */
 	thumbSize?: number;
 
+	/** Percentage of the slider that is disabled */
 	disabledPercentage?: number;
 }
 
