@@ -53,18 +53,18 @@ export function useMove<T extends HTMLElement = HTMLDivElement>(
     };
 
     const bindEvents = () => {
-      document.addEventListener("mousemove", onMouseMove);
-      document.addEventListener("mouseup", stopScrubbing);
-      document.addEventListener("touchmove", onTouchMove);
-      document.addEventListener("touchend", stopScrubbing);
-    };
+		document.addEventListener("mousemove", onMouseMove);
+		document.addEventListener("mouseup", stopScrubbing);
+		document.addEventListener("touchmove", onTouchMove);
+		document.addEventListener("touchend", stopScrubbing);
+	};
 
-    const unbindEvents = () => {
-      document.removeEventListener("mousemove", onMouseMove);
-      document.removeEventListener("mouseup", stopScrubbing);
-      document.removeEventListener("touchmove", onTouchMove);
-      document.removeEventListener("touchend", stopScrubbing);
-    };
+	const unbindEvents = () => {
+		document.removeEventListener("mousemove", onMouseMove);
+		document.removeEventListener("mouseup", stopScrubbing);
+		document.removeEventListener("touchmove", onTouchMove);
+		document.removeEventListener("touchend", stopScrubbing);
+	};
 
     const startScrubbing = () => {
       if (!isSliding.current && mounted.current) {

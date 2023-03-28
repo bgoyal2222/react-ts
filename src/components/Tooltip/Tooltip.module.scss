@@ -2,10 +2,10 @@
     font-size: var(--hb-font-size-s);
     position: absolute;
     width: min-content;
-    color: #ffffff;
+    color: var(--hb-base-white);
 }
 
 .arrow {
-    background-color: #ffffff;
+    background-color: var(--hb-base-white);
     border: 0;
 }

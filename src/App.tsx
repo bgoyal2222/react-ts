@@ -62,7 +62,7 @@ const App = () => {
 						margin: "6rem",
 					}}
 				>
-					{/* <Slider
+					<Slider
 						disabled
 						defaultValue={50}
 						showLabelOnHover={true}
@@ -72,7 +72,6 @@ const App = () => {
 							{ value: 40, label: "$40" },
 							{ value: 60, label: "$60" },
 						]}
-						disabledPercentage={50}
 					/>
 					<Slider
 						label={(value) => `${value}%`}
@@ -89,7 +88,15 @@ const App = () => {
 							{ value: 100, label: "$100" },
 						]}
 						disabledPercentage={20}
-					/> */}
+					/>
+
+					<div
+						style={{
+							width: "20rem",
+							height: "20rem",
+							backgroundColor: "red",
+						}}
+					></div>
 					<Slider
 						size='l'
 						variant='purple'
