@@ -151,7 +151,12 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>((props, ref) => {
 		event.preventDefault();
 		thumb.current?.focus();
 		onChangeEnd?.(value);
-		setValue(value);
+
+        if (
+			value <= Number(disabledPercentage !== 0 ? disabledPercentage : max)
+		) {
+			setValue(value);
+		}
 	};
 
 	const handleTrackKeydownCapture = useCallback(
