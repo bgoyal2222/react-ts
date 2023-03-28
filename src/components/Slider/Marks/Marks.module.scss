@@ -11,27 +11,19 @@
 	border-radius: 100px;
 	background-color: var(--hb-grey-300);
 
-	&--xs {
-		height: 8px;
+	&--s {
+		height: 10px;
         width: 2px;     // Width needs to be defined here, since the element is div 
 	}                   // and to show that specific pill shaped mark it must have width
 
-	&--s {
-		height: 10px;
-        width: 2px;
-	}
-
 	&--m {
-		height: 12px;
+        width: 1px;
+		height: 8px;
 	}
 
 	&--l {
 		height: 14px;   // As per the design system we dont have any specifci values, 
 	}                   // multiples of 8 cant be used as it will no longer be a pill shape
-
-	&--xl {
-		height: 16px;
-	}
 }
 
 .markFilled {
@@ -46,10 +38,6 @@
 }
 
 .fonts {
-	&--xs {
-		font-size: var(--hb-font-size-xxs);
-	}
-
 	&--s {
 		font-size: var(--hb-font-size-xs);
 	}
@@ -60,9 +48,5 @@
 
 	&--l {
 		font-size: var(--hb-font-size-m);
-	}
-
-	&--xl {
-		font-size: var(--hb-font-size-l);
 	}
 }

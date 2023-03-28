@@ -37,6 +37,11 @@
 		background-color: var(--hb-primary-purple-700);
 		color: var(--hb-validation-failure-purple-200);
 	}
+
+    &:focus-visible {
+        outline: 0;
+        box-shadow: 0 0 0 4px var(--hb-yellow-focus-yellow);
+    }
 }
 
 .dragging {
@@ -50,10 +55,6 @@
 }
 
 .fonts {
-	&--xs {
-		font-size: var(--hb-font-size-xxxs);
-	}
-
 	&--s {
 		font-size: var(--hb-font-size-xxs);
 	}
@@ -64,9 +65,5 @@
 
 	&--l {
 		font-size: var(--hb-font-size-s);
-	}
-
-	&--xl {
-		font-size: var(--hb-font-size-m);
 	}
 }
